@@ -263,7 +263,10 @@
 
                     <center>Below is the OpenMP implementation running in real time:<br><img src="img/OpenMP_PeopleTracker.gif" style="width:720px;height:480px" class="img-thumbnail"></center><br>
 
-                    <center>Below is the CUDA implementation running in real time:<br><img src="img/CUDA_PeopleTracker.gif" style="width:720px;height:480px" class="img-thumbnail"></center>
+                    <center>Below is the CUDA implementation running in real time:<br><img src="img/CUDA_PeopleTracker.gif" style="width:720px;height:480px" class="img-thumbnail"></center><br>
+
+                    <center>Below is a graph of the average frames per second of each implementation<br><img src="img/framesPerSec.png" style="width:720px;height:480px" class="img-thumbnail"></center>
+                    <br>
                     <br>
                     <p>
                     We measured the performance of our algorithm by calculating speedup. We define speedup as (time it takes for serial implementation) / (time it takes for parallel implementation). Our serial implementation is our program written in C for one core with no optimizations other than changing the linked-lists to arrays as described in the approach section.<br>
@@ -277,7 +280,7 @@
                     Using OpenMP on the Intel(R) Core(TM) i5-4590 CPU, we achieved an average speedup of 3.9183x. Using CUDA on the GeForce GTX 750 Ti, we achieved an average speedup of 4.261x.<br>
                     <br>
                     Below is a graph of our average speedup. The baseline is our serial implementation is our program written in C for one core with no optimizations other than changing the linked-lists to arrays as described in the approach section.<br>
-                    <center><img src="img/speedupAverage.png" style="width:600px;height:371px" class="img-thumbnail"></center><br><br>
+                    <center><img src="img/averageSpeedup.png" style="width:600px;height:371px" class="img-thumbnail"></center><br><br>
                     <p>
                     We do not believe that it is important to report results for different problem sizes for your project because on average, the number of pixels that will change for a security counter is reasonably close to what we tested. We did test our project on multiple different frames from multiple different footages and noticed that our speedups remained relatively constant.<br>
                     
@@ -314,6 +317,11 @@
                             <td>3.868x</td>
                           </tr>
                           <tr>
+                            <td>Segment Image</td>
+                            <td>1.817x</td>
+                            <td>2.914x</td>
+                          </tr>
+                          <tr>
                             <td>Blob Detection</td>
                             <td>5.417x</td>
                             <td>3.704x</td>
@@ -322,10 +330,14 @@
                       </table>
                     <br>
                     <p>Here is a graph of our speedups per function:</p>
-                    <center><center><img src="img/speedupFunctions.png" class="img-thumbnail"></center></center><br>
+                    <center><center><img src="img/functionSpeedup.png" class="img-thumbnail"></center></center><br>
                     <br>
                     <p>
                     Based on our timing code, we spend about 8.7% of our time in Frame Subtraction, 1.4% of our time in Threshold Image, and 89.9% of our time in Blob Detection.<br>
+                    <p>Below is a graph of our weighted average speedup for each parallel implementation. The baseline is our serial implementation is our program written in C for one core with no optimizations other than changing the linked-lists to arrays as described in the approach section.</p>
+                    <center><center><img src="img/weightedSpeedup.png" class="img-thumbnail"></center></center><br>
+                    <br>
+                    <p>
                     <br>
                     We believe that the main place in which we can improve is finding a more efficient way of calculating the width, height, position, number of pixels, and centroid of each blob, as the segmentation is already quite fast sequentially. Furthermore, from our research the speedup graph of the watershed method is as follows:<br>
                    <center><img src="img/GraphAverageTimeComparison_Watershed.PNG" class="img-thumbnail"></center><br>

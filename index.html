@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Security Camera Counter</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/grayscale.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    Security Camera Counter
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">Snapshot</a>
+                    </li>
+<!--                     <li>
+                        <a class="page-scroll" href="#proposal">Proposal</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#pr">Progress Report</a>
+                    </li> -->
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading">Security Camera Counter</h1>
+                        <p class="intro-text">A Snapshot of Our Project<br>Created by Sarah and Solon</p>
+                        <a href="#about" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+
+    <section id="about" class="container content-section">
+        <div class="row">
+                <center><img src="img/frame01.jpg" style="width:300px;height:150px"class="img-thumbnail">
+                <img src="img/frame04.jpg" style="width:300px;height:150px" class="img-thumbnail">
+                <img src="img/full3.jpg" style="width:300px;height:150px" class="img-thumbnail">
+                <img src="img/full4.jpg" style="width:300px;height:150px" class="img-thumbnail">
+                <img src="img/full5.jpg" style="width:300px;height:150px" class="img-thumbnail">
+                <img src="img/full6.jpg" style="width:300px;height:150px" class="img-thumbnail"></center>
+                <br>
+                <br>
+            <div class="col-lg-8 col-lg-offset-2">
+                <center><h2>Summary</h2></center>
+                <p>
+                    We are going to create a program that counts the number of people that appear in a frame. By parallelizing our program, we will achieve the ability to analyze more frames per second.
+                </p>
+            </div>
+            <div class="col-lg-8 col-lg-offset-2">
+                <center><h2>Background</h2></center>
+                <p> Our project is a program that given a video feed, counts the number of people that appear in the window or frame and creates a vector of movement travel. We need to be able to quickly compute the differences between frames to determine if people have entered or exited the frame and correctly identify people within frames. In order to be able to process video feeds in real time we need to be able to process large images at extremely fast speeds. 
+                </p>
+                <p> Serially, this would be a very difficult problem because the images are very large and we need to compare every pixel to see if the shading has changed, thus indicating someone moving into our field of view. As a result, it would be very difficult to have a serial implementation keep up with a real time feed, as the feed will have already changed before the serial implementation has finished analyzing the current frame.
+                </p>
+            </div>
+            <div class="col-lg-8 col-lg-offset-2">
+                <center><h2>Algorithm</h2></center>
+                <p>
+                    The algorithm of counting the number of people in a frame is as follows: </br>
+                    <ol>
+                        <li>Load two images from disk and into frames, which are stored in memory.</br>
+                        <center>Image 1 -> Frame 1:<br> <img src="img/frame01.jpg" style="width:500px;height:250px" class="img-thumbnail"><br>
+                        Image 2 -> Frame 2: <br><img src="img/frame04.jpg" style="width:500px;height:250px" class="img-thumbnail"></center></li><br>
+                        <li>Take the pixels in the later frame and subtract the corresponding pixel values in the previous frame. Store this into a results frame.</br>
+                        <center>The result of Frame 2 - Frame 1:<br> <img src="img/full3.jpg" style="width:500px;height:250px" class="img-thumbnail"></center>
+                        </li>
+                        <br>
+                        <li>Threshold each of our pixels. Basically for each pixel in the results frame, we check if the components are greater in value than our threshold value of T. If so, then we deem that the pixel has changed. If not, then we assume that the pixel did not change in value due to a person, but rather an environmental factor.<br>
+                        <center>Thresholding the result:<br><img src="img/full4.jpg" style="width:500px;height:250px" class="img-thumbnail"></center></li><br>
+                        <li>Detect the blobs(humans) in the frame by first segmenting the image.</li>
+                        <li>Create a bounding box for each labeled segment.
+                        <center>The Result after creating our bounding boxes:<br> <img src="img/full5.jpg" style="width:500px;height:250px" class="img-thumbnail"></center></li>
+                        <li>Merge overlapping bounding boxes and filter out the boxes that are smaller or larger than a particular size. This is done so that we only end up with the boxes that are around human size.<br>
+                        <center>The result after merging the boxes to detect humans:<br><img src="img/full6.jpg" style="width:500px;height:250px" class="img-thumbnail">
+                        </center></li>
+                        <li>Go back to step 1 for the next frame.</li>
+                    </ol>
+
+                </p>
+            </div>
+            <div class="col-lg-8 col-lg-offset-2">
+                <center><h2>Demo</h2></center>
+                <p>
+                    For our in class demo, we will input a video that has been parsed into frames into our program, and show the program's output of boxes around the detected people. Time permitting, we would also hope to be able to show our program demonstrating the ability to show the direction of each person.
+                </p>
+            </div>  
+            <div class="col-lg-8 col-lg-offset-2">
+                <center><h2>Preliminary Results</h2></center>
+                <p>
+                    Stats for Intel(R) Core(TM) i5-4590 CPU:<br>
+                    4 cores: 3.3 GHz <br>
+                    <br>
+                    Stats for GeForce GTX 750 Ti<br>
+                    Memory Clock Rate (KHz): 2700000<br>
+                    Memory Bus Width (bits): 128<br>
+                    Peak Memory Bandwidth (GB/s): 86.400000<br>
+                    <br>
+                    The important parallelized portions of work occur in Frame Subtraction, Threshold Image, Blob Detection, and Merge Boxes (Person Detection). Using OpenMP on the Intel(R) Core(TM) i5-4590 CPU, we achieved an average speedup of 2.996x. Using CUDA on the GeForce GTX 750 Ti., we achieved an average speedup of 3.803x.<br>
+                    <br>
+                    The important parallelized portions of work occur in Frame Subtraction, Threshold Image, Blob Detection, and Merge Boxes.<br>
+                    <br>
+
+                    Here is a table of our preliminary results:<br>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Function</th>
+                            <th>OpenMP</th>
+                            <th>CUDA</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Frame Subtraction</td>
+                            <td>2.799x</td>
+                            <td>5.212x</td>
+                          </tr>
+                          <tr>
+                            <td>Threshold Image</td>
+                            <td>3.539x</td>
+                            <td>3.868x</td>
+                          </tr>
+                          <tr>
+                            <td>Blob Detection</td>
+                            <td>5.417x</td>
+                            <td>3.704x</td>
+                          </tr>
+                          <tr>
+                            <td>Merge Boxes (Person Detection)</td>
+                            <td>0.227x</td>
+                            <td>2.429x</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    <br>
+                    <p>Here is a graph of our preliminary speedups:</p>
+                    <center><img src="img/Speedup1.png"></center>
+                </p>
+            </div>     
+        </div>
+    </section>
+
+    <!-- Download Section -->
+<!--     <section id="proposal" class="content-section text-center">
+        <div class="download-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Download Grayscale</h2>
+                    <p>You can download Grayscale for free on the preview page at Start Bootstrap.</p>
+                    <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Contact Section -->
+<!--     <section id="contact" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Contact Start Bootstrap</h2>
+                <p>Feel free to email us to provide some feedback on our templates, give us suggestions for new templates and themes, or to just say hello!</p>
+                <p><a href="mailto:feedback@startbootstrap.com">feedback@startbootstrap.com</a>
+                </p>
+                <ul class="list-inline banner-social-buttons">
+                    <li>
+                        <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                    </li>
+                    <li>
+                        <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    Map Section -->
+    <!-- <div id="map"></div> -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; Sarah and Solon 2015</p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+
+    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/grayscale.js"></script>
+
+</body>
+
+</html>
